@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPN Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <div class="main">
+        <h1>VPN</h1>
+        <h3>Create new account</h3>
+
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+        <form action="{{ url_for('register') }}" method="POST">
+            <label for="username">Username:</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter your Username"
+                required
+            >
+
+            <label for="password">Password:</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your Password"
+                required
+            >
+
+            <label for="password_confirm">Confirm Password:</label>
+            <input
+                type="password"
+                id="password_confirm"
+                name="password_confirm"
+                placeholder="Confirm your Password"
+                required
+            >
+
+            <div class="wrap">
+                <button type="submit">
+                    Register
+                </button>
+            </div>
+        </form>
+
+        <p>Already registered?
+            <a href="{{ url_for('login') }}" style="text-decoration: none;">
+                Login
+            </a>
+        </p>
+    </div>
+</body>
+</html>

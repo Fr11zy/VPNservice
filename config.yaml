@@ -1,0 +1,103 @@
+database:
+  tables:
+    - Users:
+        fields:
+          - ID: INTEGER PRIMARY KEY AUTOINCREMENT
+          - Username: TEXT NOT NULL UNIQUE
+          - Password: TEXT NOT NULL
+          - HashType: TEXT DEFAULT 'sha256'
+          - UserRoleID: INTEGER REFERENCES Roles(ID)
+          - Author: TEXT
+          - Created_date: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Last_editor: TEXT 
+          - Last_change: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Change_cnt: INTEGER
+
+    - Roles:
+        fields:
+          - ID: INTEGER PRIMARY KEY AUTOINCREMENT
+          - Name: TEXT NOT NULL UNIQUE
+          - Author: TEXT
+          - Created_date: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Last_editor: TEXT 
+          - Last_change: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Change_cnt: INTEGER
+
+    - Permissions:
+        fields:
+          - ID: INTEGER PRIMARY KEY AUTOINCREMENT
+          - Name: TEXT NOT NULL
+          - RoleID: INTEGER REFERENCES Roles(ID)
+          - Author: TEXT
+          - Created_date: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Last_editor: TEXT 
+          - Last_change: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Change_cnt: INTEGER
+    
+    - Users_H:
+        fields:
+          - ID: INTEGER PRIMARY KEY AUTOINCREMENT
+          - Username: TEXT NOT NULL UNIQUE
+          - Password: TEXT NOT NULL
+          - HashType: TEXT DEFAULT 'sha256'
+          - UserRoleID: INTEGER REFERENCES Roles(ID)
+          - Author: TEXT
+          - Created_date: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Last_editor: TEXT 
+          - Last_change: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Change_cnt: INTEGER
+
+    - Roles_H:
+        fields:
+          - ID: INTEGER PRIMARY KEY AUTOINCREMENT
+          - Name: TEXT NOT NULL UNIQUE
+          - Author: TEXT
+          - Created_date: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Last_editor: TEXT 
+          - Last_change: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Change_cnt: INTEGER
+
+    - Permissions_H:
+        fields:
+          - ID: INTEGER PRIMARY KEY AUTOINCREMENT
+          - Name: TEXT NOT NULL
+          - RoleID: INTEGER REFERENCES Roles(ID)
+          - Author: TEXT
+          - Created_date: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Last_editor: TEXT 
+          - Last_change: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Change_cnt: INTEGER
+
+    - Users_D:
+        fields:
+          - ID: INTEGER PRIMARY KEY AUTOINCREMENT
+          - Username: TEXT NOT NULL UNIQUE
+          - Password: TEXT NOT NULL
+          - HashType: TEXT DEFAULT 'sha256'
+          - UserRoleID: INTEGER REFERENCES Roles(ID)
+          - Author: TEXT
+          - Created_date: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Last_editor: TEXT 
+          - Last_change: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Change_cnt: INTEGER
+
+    - Roles_D:
+        fields:
+          - ID: INTEGER PRIMARY KEY AUTOINCREMENT
+          - Name: TEXT NOT NULL UNIQUE
+          - Author: TEXT
+          - Created_date: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Last_editor: TEXT 
+          - Last_change: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Change_cnt: INTEGER
+
+    - Permissions_D:
+        fields:
+          - ID: INTEGER PRIMARY KEY AUTOINCREMENT
+          - Name: TEXT NOT NULL
+          - RoleID: INTEGER REFERENCES Roles(ID)
+          - Author: TEXT
+          - Created_date: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Last_editor: TEXT 
+          - Last_change: TEXT NOT NULL DEFAULT (datetime('now'))
+          - Change_cnt: INTEGER
