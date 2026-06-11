@@ -1,15 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>VPN</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPN Service | Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
 </head>
 <body>
+    <div class="main dashboard">
+        <h1>SecureVPN</h1>
+        
+        {% if username %}
+            <h3>Welcome back, <span style="color: #f8fafc; font-weight: 600;">{{ username }}</span></h3>
+            <p>Your connection is secure and ready to configure.</p>
+        {% else %}
+            <h3>Welcome, guest</h3>
+        {% endif %}
 
-{% if username %}
-    <h1>Hello, {{ username }}</h1>
-{% else %}
-    <h1>Welcome, guest</h1>
-{% endif %}
-
+        <a href="{{ url_for('logout') }}" class="logout-btn">Log out</a>
+    </div>
 </body>
 </html>

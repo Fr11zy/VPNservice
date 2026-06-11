@@ -3,53 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VPN Login</title>
+    <title>VPN Service | Login</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
 </head>
 <body>
     <div class="main">
-        <h1>VPN</h1>
-        <h3>Enter your login credentials</h3>
+        <h1>SecureVPN</h1>
+        <h3>Access your dashboard</h3>
 
         {% if error %}
-            <p style="color: red;">{{ error }}</p>
+            <div class="error-msg">{{ error }}</div>
         {% endif %}
 
         <form action="{{ url_for('login') }}" method="POST">
-            <label for="username">
-                Username:
-            </label>
-            <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="Enter your Username"
-                required
-            >
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
 
-            <label for="password">
-                Password:
-            </label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Enter your Password"
-                required
-            >
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="••••••••" required>
 
-            <div class="wrap">
-                <button type="submit">
-                    Submit
-                </button>
-            </div>
+            <button type="submit">Sign In</button>
         </form>
 
-        <p>Not registered?
-            <a href="{{ url_for('register') }}" style="text-decoration: none;">
-                Create an account
-            </a>
-        </p>
+        <p>New here? <a href="{{ url_for('register') }}">Create an account</a></p>
     </div>
 </body>
 </html>
