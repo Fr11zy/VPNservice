@@ -12,7 +12,23 @@
         
         {% if username %}
             <h3>Welcome back, <span style="color: #f8fafc; font-weight: 600;">{{ username }}</span></h3>
-            <p>Your connection is secure and ready to configure.</p>
+            
+            <div class="vpn-status-box">
+                {% if is_vpn_running %}
+                    <p class="status-text running">🟢 VPN is Connected</p>
+                    <p class="traffic-info">Traffic is encrypted via XOR</p>
+                    <form action="{{ url_for('stop_vpn') }}" method="POST">
+                        <button type="submit" class="vpn-btn stop-btn">Disconnect</button>
+                    </form>
+                {% else %}
+                    <p class="status-text stopped">🔴 VPN is Disconnected</p>
+                    <p class="traffic-info">Your traffic is not secure.</p>
+                    <form action="{{ url_for('start_vpn') }}" method="POST">
+                        <button type="submit" class="vpn-btn start-btn">Connect VPN</button>
+                    </form>
+                {% endif %}
+            </div>
+
         {% else %}
             <h3>Welcome, guest</h3>
         {% endif %}

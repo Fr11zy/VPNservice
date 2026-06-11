@@ -1,5 +1,6 @@
 import sys
 import os
+import subprocess
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -14,6 +15,8 @@ app.secret_key = "super_secret_key"
 db_path = os.path.join(os.path.dirname(__file__), '..', 'db.sqlite')
 db = Database(db_path)
 
+active_vpns = {}
+
 #Главная страница
 @app.route("/")
 def mainpage():
@@ -21,7 +24,16 @@ def mainpage():
         return redirect(url_for("login"))
         
     username = session.get("username")
-    return render_template("main.html", username=username)
+    user_id = session.get("user_id")
+    
+    is_vpn_running = False
+    if user_id in active_vpns:
+        if active_vpns[user_id].poll() is None:
+            is_vpn_running = True
+        else:
+            del active_vpns[user_id]
+            
+    return render_template("main.html", username=username, is_vpn_running=is_vpn_running)
 
 
 #Страница входа
@@ -43,7 +55,8 @@ def login():
 
     session["user_id"] = user.ID
     session["username"] = user.Username
-
+    session["raw_password"] = password
+    
     return redirect(url_for("mainpage"))
 
 
@@ -76,13 +89,59 @@ def register():
 
     session["user_id"] = new_user.ID
     session["username"] = new_user.Username
-
+    session["raw_password"] = password
+    
     return redirect(url_for("mainpage"))
 
+#Запуск VPN
+@app.route("/vpn/start",methods = ["POST"])
+def start_vpn():
+    user_id = session.get("user_id")
+    username = session.get("username")
+    password = session.get("raw_password")
+    
+    if not user_id:
+        return redirect(url_for("login"))
+
+    if user_id in active_vpns and active_vpns[user_id].poll() is None:
+        return redirect(url_for("mainpage"))
+
+    cmd = [
+        "python3", "vpn.py", "client", 
+        "--ip", "vpn-server", 
+        "--user", username, 
+        "--password", password
+    ]
+    
+    proc = subprocess.Popen(cmd)
+    active_vpns[user_id] = proc
+    
+    return redirect(url_for("mainpage"))
+
+#Остановка VPN
+@app.route("/vpn/stop", methods=["POST"])
+def stop_vpn():
+    user_id = session.get("user_id")
+    
+    if user_id in active_vpns:
+        proc = active_vpns[user_id]
+        if proc.poll() is None:
+            proc.terminate()    
+            proc.wait()        
+        del active_vpns[user_id]
+        
+    return redirect(url_for("mainpage"))
 
 #Выход из аккаунта
 @app.route("/logout")
 def logout():
+    user_id = session.get("user_id")
+    if user_id in active_vpns:
+        proc = active_vpns[user_id]
+        if proc.poll() is None:
+            proc.terminate()
+        del active_vpns[user_id]
+        
     session.clear()
     return redirect(url_for("login"))
 

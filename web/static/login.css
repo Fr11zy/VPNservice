@@ -143,3 +143,65 @@ a:hover {
     background-color: #dc2626;
     text-decoration: none;
 }
+
+/* --- VPN Dashboard Specific Styles --- */
+.vpn-status-box {
+    background-color: #0f172a;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #334155;
+}
+
+.status-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.running {
+    color: #22c55e; 
+}
+
+.stopped {
+    color: #ef4444; 
+}
+
+.traffic-info {
+    font-size: 0.8rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.vpn-btn {
+    font-size: 1.1rem;
+    padding: 16px;
+    transition: transform 0.1s ease;
+}
+
+.start-btn {
+    background-color: #22c55e;
+}
+
+.start-btn:hover {
+    background-color: #16a34a;
+}
+
+.stop-btn {
+    background-color: #ef4444;
+}
+
+.stop-btn:hover {
+    background-color: #dc2626;
+}
+
+.logout-btn {
+    background-color: transparent;
+    border: 1px solid #475569;
+}
+
+.logout-btn:hover {
+    background-color: #334155;
+}
