@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: .devcontainer/fedora40.Dockerfile
+    command: python3 web/app.py
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/workspaces/project
+    user: root
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+
+  vpn-server:
+    build: 
+      context: .
+      dockerfile: .devcontainer/fedora40.Dockerfile
+    command: python3 vpn.py server
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    volumes:
+      - .:/workspaces/project
+    user: root
