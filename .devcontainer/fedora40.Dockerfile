@@ -2,7 +2,7 @@ FROM fedora:40
 
 # пакеты
 RUN dnf -y update && \
-    dnf -y install python3 python3-pip sqlite bash ncurses && \
+    dnf -y install python3 python3-pip sqlite bash ncurses iproute && \
     dnf clean all
 
 # flask
